@@ -661,7 +661,10 @@ body.michael-mode {
   opacity: 0.8;
   transition: all 0.3s ease;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 2px; /* Increased letter spacing for wider text */
+  white-space: nowrap; /* Prevent text wrapping */
+  min-width: 120px; /* Ensure minimum width for text */
+  text-align: center; /* Center the text */
 }
 
 .scroll-visual {
@@ -922,6 +925,8 @@ body.michael-mode {
   
   .scroll-text {
     font-size: 0.8rem; /* Slightly larger text */
+    letter-spacing: 1.5px; /* Slightly less spacing on mobile but still wider */
+    min-width: 100px; /* Smaller minimum width for mobile */
   }
   
   .scroll-visual {
