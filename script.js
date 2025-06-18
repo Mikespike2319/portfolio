@@ -601,7 +601,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Modern Portfolio JavaScript - Michael Sanchez
 document.addEventListener('DOMContentLoaded', function() {
-    // Navigation functionality
+    console.log('🕷️ Michael Sanchez Portfolio - Loading...');
+
+    // Get DOM elements
     const navbar = document.getElementById('navbar');
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
@@ -610,20 +612,34 @@ document.addEventListener('DOMContentLoaded', function() {
     const themeMessage = document.getElementById('theme-message');
     const avatarCircle = document.getElementById('avatar-circle');
     const logoText = document.getElementById('logo-text');
+    const scrollIndicator = document.getElementById('scroll-indicator');
+
+    // Check if essential elements exist
+    if (!themeToggle) {
+        console.error('Theme toggle button not found!');
+        return;
+    }
+
+    if (!scrollIndicator) {
+        console.error('Scroll indicator not found!');
+        return;
+    }
 
     // Mobile menu toggle
-    hamburger.addEventListener('click', function() {
-        navMenu.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    });
-
-    // Close mobile menu when clicking on a link
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            navMenu.classList.remove('active');
-            hamburger.classList.remove('active');
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
         });
-    });
+
+        // Close mobile menu when clicking on a link
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
+    }
 
     // Dark/Light mode toggle with messages
     themeToggle.addEventListener('click', function() {
@@ -637,14 +653,22 @@ document.addEventListener('DOMContentLoaded', function() {
         showThemeMessage(newTheme);
         
         // Add a subtle animation to the toggle
-        themeToggle.style.transform = 'translateY(-50%) scale(0.9)';
+        this.style.transform = 'scale(0.9)';
         setTimeout(() => {
-            themeToggle.style.transform = 'translateY(-50%) scale(1)';
+            this.style.transform = 'scale(1)';
         }, 150);
     });
 
     // Show theme toggle message
     function showThemeMessage(theme) {
+        if (!themeMessage) return;
+        
+        const messages = {
+            'dark': 'Welcome to the dark side 🌒',
+            'light': 'Let there be light! ☀️'
+        };
+        
+        themeMessage.textContent = messages[theme] || 'Theme switched!';
         themeMessage.className = `theme-message ${theme}-mode show`;
         
         setTimeout(() => {
@@ -660,25 +684,27 @@ document.addEventListener('DOMContentLoaded', function() {
     let avatarClicks = 0;
     let michaelModeActive = false;
     
-    avatarCircle.addEventListener('click', function() {
-        avatarClicks++;
-        
-        if (avatarClicks === 5 && !michaelModeActive) {
-            activateMichaelMode();
-        }
-        
-        // Reset counter after 3 seconds of no clicks
-        setTimeout(() => {
-            if (avatarClicks < 5) {
-                avatarClicks = 0;
+    if (avatarCircle) {
+        avatarCircle.addEventListener('click', function() {
+            avatarClicks++;
+            
+            if (avatarClicks === 5 && !michaelModeActive) {
+                activateMichaelMode();
             }
-        }, 3000);
-    });
+            
+            // Reset counter after 3 seconds of no clicks
+            setTimeout(() => {
+                if (avatarClicks < 5) {
+                    avatarClicks = 0;
+                }
+            }, 3000);
+        });
+    }
 
     function activateMichaelMode() {
         michaelModeActive = true;
         document.body.classList.add('michael-mode');
-        avatarCircle.classList.add('michael-mode');
+        if (avatarCircle) avatarCircle.classList.add('michael-mode');
         
         showNotification('🕷️ Michael Mode Activated! Press "M" to toggle.', 'success');
         
@@ -693,7 +719,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function deactivateMichaelMode() {
         michaelModeActive = false;
         document.body.classList.remove('michael-mode');
-        avatarCircle.classList.remove('michael-mode');
+        if (avatarCircle) avatarCircle.classList.remove('michael-mode');
         showNotification('Michael Mode Deactivated', 'info');
     }
 
@@ -723,7 +749,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.key.toLowerCase() === 'c' && !e.ctrlKey && !e.altKey) {
             if (!isTyping()) {
                 e.preventDefault();
-                document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+                const contactSection = document.getElementById('contact');
+                if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: 'smooth' });
+                }
             }
         }
     });
@@ -739,26 +768,29 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Logo click easter egg
-    logoText.addEventListener('click', function() {
-        this.style.transform = 'rotate(360deg)';
-        setTimeout(() => {
-            this.style.transform = 'rotate(0deg)';
-        }, 500);
-        
-        // Show a fun message
-        showNotification('SpiderGaming in the house! 🕷️', 'info');
-    });
+    if (logoText) {
+        logoText.addEventListener('click', function() {
+            this.style.transform = 'rotate(360deg)';
+            setTimeout(() => {
+                this.style.transform = 'rotate(0deg)';
+            }, 500);
+            
+            showNotification('SpiderGaming in the house! 🕷️', 'info');
+        });
+    }
 
     // Navbar scroll effect
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) {
-            navbar.style.background = 'rgba(0, 0, 0, 0.98)';
-            navbar.style.backdropFilter = 'blur(20px)';
-        } else {
-            navbar.style.background = 'rgba(0, 0, 0, 0.95)';
-            navbar.style.backdropFilter = 'blur(10px)';
-        }
-    });
+    if (navbar) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(0, 0, 0, 0.98)';
+                navbar.style.backdropFilter = 'blur(20px)';
+            } else {
+                navbar.style.background = 'rgba(0, 0, 0, 0.95)';
+                navbar.style.backdropFilter = 'blur(10px)';
+            }
+        });
+    }
 
     // Active navigation link highlighting
     const sections = document.querySelectorAll('section');
@@ -800,6 +832,58 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Enhanced scroll indicator functionality
+    if (scrollIndicator) {
+        scrollIndicator.addEventListener('click', function() {
+            // Add click effect
+            this.classList.add('clicked');
+            
+            // Remove click effect after animation
+            setTimeout(() => {
+                this.classList.remove('clicked');
+            }, 600);
+            
+            // Smooth scroll to about section
+            const aboutSection = document.getElementById('about');
+            if (aboutSection) {
+                aboutSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+            
+            // Show fun notification
+            showNotification('Welcome to my digital web! 🕸️', 'info');
+        });
+        
+        // Hide scroll indicator when scrolling past hero
+        window.addEventListener('scroll', function() {
+            const heroSection = document.querySelector('.hero');
+            if (heroSection) {
+                const heroHeight = heroSection.offsetHeight;
+                const scrollPosition = window.scrollY;
+                
+                if (scrollPosition > heroHeight * 0.8) {
+                    scrollIndicator.style.opacity = '0';
+                    scrollIndicator.style.transform = 'translateX(-50%) translateY(20px)';
+                } else {
+                    scrollIndicator.style.opacity = '1';
+                    scrollIndicator.style.transform = 'translateX(-50%) translateY(0)';
+                }
+            }
+        });
+        
+        // Special hover effect for spider web
+        scrollIndicator.addEventListener('mouseenter', function() {
+            // Random chance to show SpiderGaming message
+            if (Math.random() < 0.3) {
+                setTimeout(() => {
+                    showNotification('🕷️ SpiderGaming detected!', 'info');
+                }, 500);
+            }
+        });
+    }
+
     // Intersection Observer for animations
     const observerOptions = {
         threshold: 0.1,
@@ -839,7 +923,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Contact form handling with enhanced success message
+    // Contact form handling
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
@@ -854,77 +938,39 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Show loading state
             const submitBtn = this.querySelector('.submit-btn');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-            submitBtn.disabled = true;
-            
-            // Simulate form submission (replace with actual form handling)
-            setTimeout(() => {
-                // Show success message
-                showNotification('Message sent! I\'ll get back to you within 24 hours. 🚀', 'success');
+            if (submitBtn) {
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                submitBtn.disabled = true;
                 
-                // Reset form
-                this.reset();
-                
-                // Reset button
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }, 2000);
+                // Simulate form submission
+                setTimeout(() => {
+                    showNotification('Message sent! I\'ll get back to you within 24 hours. 🚀', 'success');
+                    this.reset();
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }, 2000);
+            }
         });
     }
 
-    // Form validation
-    const formInputs = document.querySelectorAll('input, textarea, select');
-    formInputs.forEach(input => {
-        input.addEventListener('blur', function() {
-            validateField(this);
-        });
+    // Typing effect for hero subtitle
+    const heroSubtitle = document.querySelector('.hero-subtitle');
+    if (heroSubtitle) {
+        const text = heroSubtitle.textContent;
+        heroSubtitle.textContent = '';
+        let i = 0;
         
-        input.addEventListener('input', function() {
-            if (this.classList.contains('error')) {
-                validateField(this);
-            }
-        });
-    });
-
-    function validateField(field) {
-        const value = field.value.trim();
-        const fieldType = field.type;
-        let isValid = true;
-        let errorMessage = '';
-
-        // Remove existing error styles
-        field.classList.remove('error');
-        const existingError = field.parentNode.querySelector('.error-message');
-        if (existingError) {
-            existingError.remove();
-        }
-
-        // Validation rules
-        if (field.hasAttribute('required') && !value) {
-            isValid = false;
-            errorMessage = 'This field is required';
-        } else if (fieldType === 'email' && value) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(value)) {
-                isValid = false;
-                errorMessage = 'Please enter a valid email address';
+        function typeWriter() {
+            if (i < text.length) {
+                heroSubtitle.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
             }
         }
-
-        if (!isValid) {
-            field.classList.add('error');
-            const errorElement = document.createElement('span');
-            errorElement.className = 'error-message';
-            errorElement.textContent = errorMessage;
-            errorElement.style.color = 'var(--primary-color)';
-            errorElement.style.fontSize = '0.875rem';
-            errorElement.style.marginTop = '0.25rem';
-            errorElement.style.display = 'block';
-            field.parentNode.appendChild(errorElement);
-        }
-
-        return isValid;
+        
+        // Start typing effect after a short delay
+        setTimeout(typeWriter, 1000);
     }
 
     // Enhanced notification system
@@ -992,25 +1038,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     }
 
-    // Typing effect for hero subtitle
-    const heroSubtitle = document.querySelector('.hero-subtitle');
-    if (heroSubtitle) {
-        const text = heroSubtitle.textContent;
-        heroSubtitle.textContent = '';
-        let i = 0;
-        
-        function typeWriter() {
-            if (i < text.length) {
-                heroSubtitle.textContent += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 100);
-            }
-        }
-        
-        // Start typing effect after a short delay
-        setTimeout(typeWriter, 1000);
-    }
-
     // Enhanced floating card interactions
     const floatingCards = document.querySelectorAll('.floating-card');
     floatingCards.forEach((card, index) => {
@@ -1026,81 +1053,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Optimized parallax effect for floating cards
-    let ticking = false;
-    let lastScrollY = 0;
-
-    function updateFloatingCards() {
-        const scrolled = window.pageYOffset;
-        const heroSection = document.querySelector('.hero');
-        const heroHeight = heroSection ? heroSection.offsetHeight : window.innerHeight;
-        
-        // Only apply parallax when in hero section
-        if (scrolled < heroHeight) {
-            floatingCards.forEach((card, index) => {
-                const speed = 0.3 + (index * 0.05); // Reduced speed for smoother effect
-                const yPos = scrolled * speed;
-                card.style.transform = `translateY(${yPos}px)`;
-            });
-        } else {
-            // Reset position when out of hero section
-            floatingCards.forEach(card => {
-                card.style.transform = 'translateY(0px)';
-            });
-        }
-        
-        ticking = false;
-    }
-
-    function requestTick() {
-        if (!ticking) {
-            requestAnimationFrame(updateFloatingCards);
-            ticking = true;
-        }
-    }
-
-    // Throttled scroll event for better performance
-    window.addEventListener('scroll', function() {
-        lastScrollY = window.scrollY;
-        requestTick();
-    });
-
-    // Disable parallax on mobile for better performance
-    if (window.innerWidth <= 768) {
-        floatingCards.forEach(card => {
-            card.style.transform = 'translateY(0px)';
-        });
-    }
-
-    // Enhanced project card interactions
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-10px) scale(1.02)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-
     // Initialize skill bars width to 0
     const skillBars = document.querySelectorAll('.skill-progress');
     skillBars.forEach(bar => {
         bar.style.width = '0%';
     });
-
-    // Add CSS for error states
-    const style = document.createElement('style');
-    style.textContent = `
-        .form-group input.error,
-        .form-group textarea.error,
-        .form-group select.error {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.1);
-        }
-    `;
-    document.head.appendChild(style);
 
     // Show keyboard shortcuts hint after 30 seconds
     setTimeout(() => {
@@ -1109,110 +1066,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     console.log('🕷️ Michael Sanchez Portfolio - Loaded and ready!');
     console.log('🎮 Easter eggs: Click avatar 5 times, press "M" for Michael Mode!');
+});
 
-    // Enhanced scroll indicator functionality
-    const scrollIndicator = document.getElementById('scroll-indicator');
+// Handle window resize
+window.addEventListener('resize', () => {
+    const navMenu = document.querySelector('.nav-menu');
+    const hamburger = document.querySelector('.hamburger');
     
-    if (scrollIndicator) {
-        scrollIndicator.addEventListener('click', function() {
-            // Add click effect
-            this.classList.add('clicked');
-            
-            // Remove click effect after animation
-            setTimeout(() => {
-                this.classList.remove('clicked');
-            }, 600);
-            
-            // Smooth scroll to about section
-            const aboutSection = document.getElementById('about');
-            if (aboutSection) {
-                aboutSection.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-            
-            // Show fun notification
-            showNotification('Welcome to my digital web! 🕸️', 'info');
-        });
-        
-        // Hide scroll indicator when scrolling past hero
-        window.addEventListener('scroll', function() {
-            const heroHeight = document.querySelector('.hero').offsetHeight;
-            const scrollPosition = window.scrollY;
-            
-            if (scrollPosition > heroHeight * 0.8) {
-                scrollIndicator.style.opacity = '0';
-                scrollIndicator.style.transform = 'translateX(-50%) translateY(20px)';
-            } else {
-                scrollIndicator.style.opacity = '1';
-                scrollIndicator.style.transform = 'translateX(-50%) translateY(0)';
-            }
-        });
-        
-        // Special hover effect for spider web
-        scrollIndicator.addEventListener('mouseenter', function() {
-            // Random chance to show SpiderGaming message
-            if (Math.random() < 0.3) {
-                setTimeout(() => {
-                    showNotification('🕷️ SpiderGaming detected!', 'info');
-                }, 500);
-            }
-        });
+    if (window.innerWidth > 768) {
+        navMenu?.classList.remove('active');
+        hamburger?.classList.remove('active');
     }
 });
 
-// Project link functionality
-class ProjectLinks {
-  constructor() {
-    this.setupProjectLinks();
-  }
-
-  setupProjectLinks() {
-    const projectLinks = document.querySelectorAll('.project-link');
-    const projectUrls = {
-      'The Mansion on the Sea': 'https://themansiononthesea.com',
-      'Seaside Café Key West': 'https://seasidecafekw.com',
-      'Pescado Key West': 'https://pescadokw.com',
-      'Mansion Marriages': 'https://mansionmarriages.com',
-      'Michelle Foundation': 'https://michellefoundation.com'
-    };
-
-    projectLinks.forEach(link => {
-      if (link.href && link.href !== '#') {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          window.open(link.href, '_blank');
-        });
-      }
-    });
-  }
-}
-
 // Add CSS animations
 const animationStyles = `
-  @keyframes slideInRight {
-    from {
-      transform: translateX(100%);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes slideOutRight {
-    from {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    to {
-      transform: translateX(100%);
-      opacity: 0;
-    }
-  }
-
   .hamburger.active span:nth-child(1) {
     transform: rotate(45deg) translate(5px, 5px);
   }
@@ -1230,20 +1098,3 @@ const animationStyles = `
 const styleSheet = document.createElement('style');
 styleSheet.textContent = animationStyles;
 document.head.appendChild(styleSheet);
-
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  new ModernPortfolio();
-  new ProjectLinks();
-});
-
-// Handle window resize
-window.addEventListener('resize', () => {
-  const navMenu = document.querySelector('.nav-menu');
-  const hamburger = document.querySelector('.hamburger');
-  
-  if (window.innerWidth > 768) {
-    navMenu?.classList.remove('active');
-    hamburger?.classList.remove('active');
-  }
-});
