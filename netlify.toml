@@ -1,6 +1,6 @@
 [build]
   # Publish directory - where your built site files are located
-  publish = "src"
+  publish = "."
   
   # Build command (not needed for static HTML/CSS/JS)
   command = ""
