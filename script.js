@@ -627,22 +627,47 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Mobile menu toggle
     if (hamburger && navMenu) {
-        hamburger.addEventListener('click', function() {
+        function toggleMobileMenu() {
             navMenu.classList.toggle('active');
             hamburger.classList.toggle('active');
+        }
+
+        // Add both click and touchend events for hamburger
+        hamburger.addEventListener('click', toggleMobileMenu);
+        hamburger.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            toggleMobileMenu();
         });
 
         // Close mobile menu when clicking on a link
         navLinks.forEach(link => {
-            link.addEventListener('click', function() {
+            function closeMobileMenu() {
                 navMenu.classList.remove('active');
                 hamburger.classList.remove('active');
+            }
+
+            link.addEventListener('click', closeMobileMenu);
+            link.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                closeMobileMenu();
+                // Still trigger the link navigation
+                setTimeout(() => {
+                    link.click();
+                }, 100);
             });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
         });
     }
 
     // Dark/Light mode toggle with messages
-    themeToggle.addEventListener('click', function() {
+    function handleThemeToggle() {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'light' ? 'dark' : 'light';
         
@@ -653,10 +678,17 @@ document.addEventListener('DOMContentLoaded', function() {
         showThemeMessage(newTheme);
         
         // Add a subtle animation to the toggle
-        this.style.transform = 'scale(0.9)';
+        themeToggle.style.transform = 'translateY(-50%) scale(0.9)';
         setTimeout(() => {
-            this.style.transform = 'scale(1)';
+            themeToggle.style.transform = 'translateY(-50%) scale(1)';
         }, 150);
+    }
+
+    // Add both click and touchend events for better mobile support
+    themeToggle.addEventListener('click', handleThemeToggle);
+    themeToggle.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        handleThemeToggle();
     });
 
     // Show theme toggle message
@@ -834,13 +866,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Enhanced scroll indicator functionality
     if (scrollIndicator) {
-        scrollIndicator.addEventListener('click', function() {
+        function handleScrollClick() {
             // Add click effect
-            this.classList.add('clicked');
+            scrollIndicator.classList.add('clicked');
             
             // Remove click effect after animation
             setTimeout(() => {
-                this.classList.remove('clicked');
+                scrollIndicator.classList.remove('clicked');
             }, 600);
             
             // Smooth scroll to about section
@@ -854,6 +886,13 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Show fun notification
             showNotification('Welcome to my digital web! 🕸️', 'info');
+        }
+
+        // Add both click and touchend events for better mobile support
+        scrollIndicator.addEventListener('click', handleScrollClick);
+        scrollIndicator.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            handleScrollClick();
         });
         
         // Hide scroll indicator when scrolling past hero

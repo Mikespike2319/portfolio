@@ -99,10 +99,16 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: var(--shadow-lg);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
   
   &:hover {
     transform: translateY(-50%) scale(1.1);
     border-color: var(--primary-color);
+  }
+  
+  &:active {
+    transform: translateY(-50%) scale(0.95);
   }
   
   .toggle-icon {
@@ -111,6 +117,7 @@ body {
     height: 24px;
     color: var(--primary-color);
     transition: all 0.3s ease;
+    pointer-events: none;
   }
   
   .sun-icon {
@@ -251,6 +258,9 @@ body {
   display: none;
   flex-direction: column;
   cursor: pointer;
+  padding: 0.5rem;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
   
   span {
     width: 25px;
@@ -259,6 +269,7 @@ body {
     margin: 3px 0;
     transition: 0.3s;
     border-radius: 2px;
+    pointer-events: none;
   }
   
   @media (max-width: 768px) {
@@ -617,9 +628,15 @@ body.michael-mode {
   transform: translateX(-50%);
   cursor: pointer;
   transition: all 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
   
   &:hover {
     transform: translateX(-50%) scale(1.1);
+  }
+  
+  &:active {
+    transform: translateX(-50%) scale(0.95);
   }
 }
 
