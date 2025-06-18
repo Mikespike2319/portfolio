@@ -1674,6 +1674,8 @@ body.michael-mode {
   .btn {
     width: 100%;
     max-width: 280px;
+    justify-content: center; /* Center content horizontally */
+    text-align: center; /* Center text */
   }
   
   .section-title {
@@ -1832,6 +1834,8 @@ body.michael-mode {
     padding: 1rem 1.5rem;
     font-size: 1.1rem;
     min-height: 48px; /* Touch-friendly minimum */
+    justify-content: center; /* Center content horizontally */
+    text-align: center; /* Center text */
   }
   
   .contact-method .method-icon {
