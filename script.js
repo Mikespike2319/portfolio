@@ -907,7 +907,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     scrollIndicator.style.transform = 'translateX(-50%) translateY(20px)';
                 } else {
                     scrollIndicator.style.opacity = '1';
-                    scrollIndicator.style.transform = 'translateX(-50%) translateY(0)';
+                    // Check if mobile to maintain proper transform
+                    if (window.innerWidth <= 480) {
+                        scrollIndicator.style.transform = 'translateX(-50%) translateY(0)';
+                    } else {
+                        scrollIndicator.style.transform = 'translateX(-50%) translateY(0)';
+                    }
                 }
             }
         });
