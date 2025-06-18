@@ -6,7 +6,7 @@ Welcome to my digital web! This portfolio showcases my work in web development, 
 
 ## 🚀 Live Portfolio
 
-Visit the live site: [mikespike2319.github.io/portfolio](https://mikespike2319.github.io/portfolio)
+Visit the live site: [webthatworks.netlify.app](https://webthatworks.netlify.app)
 
 ## 🎯 What I Do
 
