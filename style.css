@@ -626,7 +626,7 @@ body.michael-mode {
 }
 
 .scroll-indicator {
-  position: absolute;
+  position: fixed;
   bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
@@ -634,6 +634,7 @@ body.michael-mode {
   transition: all 0.3s ease;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
+  z-index: 1000; /* High z-index to stay above all content */
   
   &:hover {
     transform: translateX(-50%) scale(1.1);
@@ -913,21 +914,28 @@ body.michael-mode {
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .scroll-indicator {
-    bottom: 1.5rem;
+    bottom: 2rem; /* Keep consistent with desktop */
+    width: 80px; /* Wider for better mobile appearance */
+    height: 60px; /* Taller for better proportion */
+    z-index: 1000; /* Ensure it stays above mobile content */
   }
   
   .scroll-text {
-    font-size: 0.75rem;
+    font-size: 0.8rem; /* Slightly larger text */
   }
   
   .scroll-visual {
-    width: 25px;
-    height: 40px;
+    width: 28px; /* Wider visual element */
+    height: 42px; /* Taller visual element */
   }
   
   .scroll-web {
-    width: 50px;
-    height: 30px;
+    width: 55px; /* Wider spider web */
+    height: 35px; /* Taller spider web */
+  }
+  
+  .scroll-container {
+    gap: 0.7rem; /* More spacing between elements */
   }
 }
 
@@ -1783,17 +1791,25 @@ body.michael-mode {
     bottom: 1rem;
     left: 50%;
     transform: translateX(-50%);
-    width: 50px;
-    height: 50px;
+    width: 80px; /* Wider for better mobile appearance */
+    height: 60px; /* Slightly taller too */
   }
   
   .scroll-text {
-    font-size: 0.75rem;
+    font-size: 0.875rem; /* Slightly larger text */
   }
   
   .scroll-visual {
-    width: 20px;
-    height: 20px;
+    width: 24px; /* Wider visual element */
+    height: 40px; /* Taller visual element */
+  }
+  
+  .scroll-container {
+    gap: 0.75rem; /* More spacing between elements */
+  }
+  
+  .scroll-lines {
+    bottom: -18px; /* Adjust position for larger size */
   }
   
   .hamburger {
