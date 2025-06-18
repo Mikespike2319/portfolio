@@ -940,7 +940,11 @@ body.michael-mode {
   }
   
   .scroll-container {
-    gap: 0.7rem; /* More spacing between elements */
+    gap: 0.5rem; /* Tighter spacing on mobile for single line appearance */
+  }
+  
+  .scroll-code {
+    display: none; /* Hide code comment on mobile for cleaner single-line look */
   }
 }
 
